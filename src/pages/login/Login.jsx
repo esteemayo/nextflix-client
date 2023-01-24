@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
-import { loginUser } from 'redux/user/userSlice';
+import { loginUser, reset } from 'redux/user/userSlice';
 import './login.scss';
 
 const Login = () => {
@@ -30,6 +30,10 @@ const Login = () => {
   useEffect(() => {
     usernameRef.current.focus();
   }, []);
+
+  useEffect(() => {
+    dispatch(reset());
+  }, [dispatch]);
 
   return (
     <div className='login'>
