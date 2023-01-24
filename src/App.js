@@ -1,8 +1,15 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-import { Error, Home, Login, Register, SharedLayout, Watch } from 'pages/index';
-import ProtectedRoute from 'utils/ProtectedRoute';
 import AuthRoute from 'utils/AuthRoute';
+import ProtectedRoute from 'utils/ProtectedRoute';
+import {
+  Error,
+  Home,
+  Login,
+  Register,
+  SharedLayout,
+  Watch,
+} from 'pages/index';
 
 import './app.scss';
 
