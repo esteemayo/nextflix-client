@@ -5,11 +5,7 @@ const AuthRoute = ({ children }) => {
   const location = useLocation();
   const { user } = useSelector((state) => state.user);
 
-  if (!user) {
-    return <Navigate to='/login' replace state={{ from: location }} />;
-  }
-
-  return children;
+  return !user ? <Navigate to='/login' replace state={{ from: location }} /> : children;
 };
 
 export default AuthRoute;
