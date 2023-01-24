@@ -10,7 +10,7 @@ import {
 } from 'firebase/storage';
 
 import app from '../../firebase';
-import { registerUser } from 'redux/user/userSlice';
+import { registerUser, reset } from 'redux/user/userSlice';
 
 import './register.scss';
 
@@ -75,6 +75,10 @@ const Register = () => {
       }
     );
   };
+
+  useEffect(() => {
+    dispatch(reset());
+  }, [dispatch]);
 
   useEffect(() => {
     error && toast.error(error);
