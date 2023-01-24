@@ -51,6 +51,7 @@ export const userSlice = createSlice({
       state.error = true;
     },
     logout: (state) => {
+      clearStorage();
       state.user = null;
     },
   },
