@@ -1,10 +1,23 @@
 import jwtDecode from 'jwt-decode';
-import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { login } from 'services/authService';
 
-const initialStateValue = {
+export const loginUser = createAsyncThunk(
+  'auth/login',
+  async ({ credentials }, { rejectWithValue }) => {
+    try {
+      const { data } = await login({ ...credentials });
+      return data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
+const initialState = {
   user: null,
   loading: false,
-  error: false,
+  error: null,
 };
 
 const tokenKey = 'accessToken';
@@ -17,13 +30,13 @@ if (token) {
   if (decodedToken.exp * 1000 < expiryDate) {
     localStorage.removeItem(tokenKey);
   } else {
-    initialStateValue.user = decodedToken;
+    initialState.user = decodedToken;
   }
 }
 
 export const userSlice = createSlice({
   name: 'user',
-  initialState: initialStateValue,
+  initialState,
   reducers: {
     loginStart: (state) => {
       state.loading = true;
@@ -40,6 +53,20 @@ export const userSlice = createSlice({
       state.user = null;
     },
   },
+  extraReducers: {
+    [loginUser.pending]: (state) => {
+      state.loading = true;
+    },
+    [loginUser.fulfilled]: (state, { payload }) => {
+      state.loading = false;
+      state.user = payload;
+    },
+    [loginUser.rejected]: (state, { payload }) => {
+      state.loading = false;
+      state.user = null;
+      state.error = payload.message;
+    },
+  }
 });
 
 export const { loginFailure, loginStart, loginSuccess, logout } =
