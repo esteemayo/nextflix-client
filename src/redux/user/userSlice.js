@@ -6,7 +6,7 @@ import { clearStorage, getFromStorage, setToStorage } from 'utils';
 
 export const loginUser = createAsyncThunk(
   'auth/login',
-  async ({ credentials }, { rejectWithValue }) => {
+  async (credentials, { rejectWithValue }) => {
     try {
       const { data } = await login({ ...credentials });
       return data.details;
