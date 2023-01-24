@@ -1,7 +1,7 @@
 import jwtDecode from 'jwt-decode';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-import { login } from 'services/authService';
+import { getJWT, login } from 'services/authService';
 import { clearStorage, getFromStorage, setToStorage } from 'utils';
 
 export const loginUser = createAsyncThunk(
@@ -16,6 +16,7 @@ export const loginUser = createAsyncThunk(
   }
 );
 
+const token = getJWT();
 const user = getFromStorage();
 
 const initialState = {
@@ -24,8 +25,7 @@ const initialState = {
   error: null,
 };
 
-const tokenKey = 'accessToken';
-const token = localStorage.getItem(tokenKey);
+
 
 if (token) {
   const decodedToken = jwtDecode(token);
