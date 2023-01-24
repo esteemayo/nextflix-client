@@ -39,17 +39,6 @@ export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    loginStart: (state) => {
-      state.loading = true;
-    },
-    loginSuccess: (state, { payload }) => {
-      state.user = payload;
-      state.loading = false;
-    },
-    loginFailure: (state) => {
-      state.loading = false;
-      state.error = true;
-    },
     logout: (state) => {
       clearStorage();
       state.user = null;
@@ -72,7 +61,6 @@ export const userSlice = createSlice({
   }
 });
 
-export const { loginFailure, loginStart, loginSuccess, logout } =
-  userSlice.actions;
+export const { logout } = userSlice.actions;
 
 export default userSlice.reducer;
