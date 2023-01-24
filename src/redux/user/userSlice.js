@@ -62,6 +62,10 @@ export const userSlice = createSlice({
       clearStorage();
       state.user = null;
     },
+    reset: (state) => {
+      state.loading = false;
+      state.error = null;
+    },
   },
   extraReducers: {
     [loginUser.pending]: (state) => {
@@ -93,6 +97,6 @@ export const userSlice = createSlice({
   }
 });
 
-export const { logout } = userSlice.actions;
+export const { logout, reset } = userSlice.actions;
 
 export default userSlice.reducer;
