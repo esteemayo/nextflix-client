@@ -25,8 +25,6 @@ const initialState = {
   error: null,
 };
 
-
-
 if (token) {
   const decodedToken = jwtDecode(token);
   const expiryDate = Date.now();
