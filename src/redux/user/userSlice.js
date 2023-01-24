@@ -1,6 +1,7 @@
 import jwtDecode from 'jwt-decode';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
+import { register } from 'services/userService';
 import { getJWT, login } from 'services/authService';
 import {
   clearStorage,
@@ -14,6 +15,19 @@ export const loginUser = createAsyncThunk(
   async (credentials, { rejectWithValue }) => {
     try {
       const { data } = await login({ ...credentials });
+      return data.details;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
+export const registerUser = createAsyncThunk(
+  'auth/login',
+  async ({ credentials, navigate }, { rejectWithValue }) => {
+    try {
+      const { data } = await register({ ...credentials });
+      navigate('/');
       return data.details;
     } catch (err) {
       return rejectWithValue(err.response.data);
@@ -59,6 +73,19 @@ export const userSlice = createSlice({
       state.user = payload;
     },
     [loginUser.rejected]: (state, { payload }) => {
+      state.loading = false;
+      state.user = null;
+      state.error = payload.message;
+    },
+    [registerUser.pending]: (state) => {
+      state.loading = true;
+    },
+    [registerUser.fulfilled]: (state, { payload }) => {
+      state.loading = false;
+      setToStorage(tokenKey, payload);
+      state.user = payload;
+    },
+    [registerUser.rejected]: (state, { payload }) => {
       state.loading = false;
       state.user = null;
       state.error = payload.message;
