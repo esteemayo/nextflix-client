@@ -3,9 +3,9 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import AuthRoute from 'utils/AuthRoute';
 import ProtectedRoute from 'utils/ProtectedRoute';
 import {
-  Error,
   Home,
   Login,
+  NotFound,
   Register,
   SharedLayout,
   Watch,
@@ -66,7 +66,7 @@ function App() {
               </ProtectedRoute>
             }
           />
-          <Route path='*' element={<Error />} />
+          <Route path='*' element={<NotFound />} />
         </Route>
       </Routes>
     </Router>
