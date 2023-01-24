@@ -1,8 +1,9 @@
 import { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { loginUser } from 'redux/user/userSlice';
 
-import { loginUser } from 'redux/apiCalls';
+
 
 import './login.scss';
 
@@ -18,12 +19,12 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const userData = {
+    const credentials = {
       username: usernameRef.current.value,
       password: passwordRef.current.value,
     };
 
-    loginUser(dispatch, { ...userData });
+    dispatch(loginUser(credentials));
 
     const origin = location.state?.from?.pathname || '/';
     navigate(origin);
