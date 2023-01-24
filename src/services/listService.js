@@ -1,11 +1,10 @@
 import http from './httpService';
 
-const apiEndpoint = 'lists';
+const apiEndpoint = '/lists';
 
 export function getRandomLists(type, genre) {
   return http.get(
-    `${apiEndpoint}${type ? '?type=' + type : ''}${
-      genre ? '&genre=' + genre : ''
+    `${apiEndpoint}${type ? '?type=' + type : ''}${genre ? '&genre=' + genre : ''
     }`
   );
 }
