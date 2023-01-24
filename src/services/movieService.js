@@ -1,8 +1,8 @@
 import http from './httpService';
 
-const apiEndpoint = 'movies';
+const apiEndpoint = '/movies';
 
-export function getMovies() {}
+export function getMovies() { }
 
 export function getMovie(movieId) {
   return http.get(`${apiEndpoint}/find/${movieId}`);
