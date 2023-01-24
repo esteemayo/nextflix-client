@@ -1,10 +1,8 @@
 import { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+
 import { loginUser } from 'redux/user/userSlice';
-
-
-
 import './login.scss';
 
 const Login = () => {
@@ -14,7 +12,7 @@ const Login = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
-  const { error, loading } = useSelector((state) => state.user);
+  const { user, error, loading } = useSelector((state) => state.user);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -25,9 +23,8 @@ const Login = () => {
     };
 
     dispatch(loginUser(credentials));
-
     const origin = location.state?.from?.pathname || '/';
-    navigate(origin);
+    user && navigate(origin);
   };
 
   useEffect(() => {
@@ -54,11 +51,7 @@ const Login = () => {
           <button className='login__button' disabled={loading}>
             {loading ? 'Processing ...' : 'Sign in'}
           </button>
-          {error && (
-            <div className='error-message'>
-              Wrong credentials, please try again...
-            </div>
-          )}
+          {error && <div className='error-message'>{error}</div>}
           <span>
             New to Netflix?{' '}
             <Link to='/register' className='link'>
