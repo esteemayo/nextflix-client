@@ -1,8 +1,8 @@
 import jwtDecode from 'jwt-decode';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
+import * as authAPI from 'services/authService';
 import { register } from 'services/userService';
-import { getJWT, login } from 'services/authService';
 import {
   clearStorage,
   getFromStorage,
@@ -14,7 +14,7 @@ export const loginUser = createAsyncThunk(
   'auth/login',
   async (credentials, { rejectWithValue }) => {
     try {
-      const { data } = await login({ ...credentials });
+      const { data } = await authAPI.login({ ...credentials });
       return data.details;
     } catch (err) {
       return rejectWithValue(err.response.data);
@@ -35,7 +35,7 @@ export const registerUser = createAsyncThunk(
   }
 );
 
-const token = getJWT();
+const token = authAPI.getJWT();
 const user = getFromStorage(tokenKey);
 
 const initialState = {
