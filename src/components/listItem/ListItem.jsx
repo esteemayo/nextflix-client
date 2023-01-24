@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   Add,
   ThumbUpAltOutlined,
@@ -14,20 +14,18 @@ const ListItem = ({ index, item }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [movie, setMovie] = useState({});
 
-  const fetchMovie = useCallback(async () => {
-    try {
-      const {
-        data: { movie },
-      } = await getMovie(item);
-      setMovie(movie);
-    } catch (err) {
-      console.log(err);
-    }
-  }, [item]);
-
   useEffect(() => {
-    fetchMovie();
-  }, [fetchMovie]);
+    (async () => {
+      try {
+        const {
+          data: { movie },
+        } = await getMovie(item);
+        setMovie(movie);
+      } catch (err) {
+        console.log(err);
+      }
+    })();
+  }, [item]);
 
   return (
     <Link to='/watch' state={movie}>
