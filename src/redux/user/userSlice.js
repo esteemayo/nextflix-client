@@ -1,22 +1,25 @@
 import jwtDecode from 'jwt-decode';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+
 import { login } from 'services/authService';
-import { setToStorage } from 'utils';
+import { clearStorage, getFromStorage, setToStorage } from 'utils';
 
 export const loginUser = createAsyncThunk(
   'auth/login',
   async ({ credentials }, { rejectWithValue }) => {
     try {
       const { data } = await login({ ...credentials });
-      return data;
+      return data.details;
     } catch (err) {
       return rejectWithValue(err.response.data);
     }
   }
 );
 
+const user = getFromStorage();
+
 const initialState = {
-  user: null,
+  user: user ?? null,
   loading: false,
   error: null,
 };
@@ -29,9 +32,8 @@ if (token) {
   const expiryDate = Date.now();
 
   if (decodedToken.exp * 1000 < expiryDate) {
-    localStorage.removeItem(tokenKey);
-  } else {
-    initialState.user = decodedToken;
+    clearStorage();
+    initialState.user = null;
   }
 }
 
