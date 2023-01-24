@@ -1,6 +1,7 @@
 import jwtDecode from 'jwt-decode';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { login } from 'services/authService';
+import { setToStorage } from 'utils';
 
 export const loginUser = createAsyncThunk(
   'auth/login',
@@ -59,6 +60,7 @@ export const userSlice = createSlice({
     },
     [loginUser.fulfilled]: (state, { payload }) => {
       state.loading = false;
+      setToStorage(payload);
       state.user = payload;
     },
     [loginUser.rejected]: (state, { payload }) => {
