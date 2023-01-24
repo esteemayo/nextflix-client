@@ -1,0 +1,117 @@
+@import '../../app.scss';
+
+.navbar {
+  width: 100%;
+  background-image: linear-gradient(
+    to top,
+    transparent 0%,
+    rgba(0, 0, 0, 0.3) 50%
+  );
+  color: var(--color-white);
+  font-size: 1.4rem;
+  position: fixed;
+  top: 0;
+  z-index: 2000;
+
+  &.scrolled {
+    background-color: var(--main-color);
+  }
+
+  .container {
+    height: 7rem;
+    padding: 0 5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .left {
+      display: flex;
+      align-items: center;
+
+      img {
+        height: 2.5rem;
+        margin-right: 4rem;
+
+        @include mobile {
+          display: none;
+        }
+      }
+
+      .list {
+        list-style: none;
+        display: flex;
+        align-items: center;
+
+        .list__item {
+          &:not(:last-of-type) {
+            margin-right: 1rem;
+          }
+
+          @include tablet {
+            display: none;
+          }
+
+          &.list__item--main {
+            @include tablet {
+              display: block;
+            }
+          }
+
+          .nav__link:link,
+          .nav__link:visited {
+            text-decoration: none;
+            color: inherit;
+          }
+        }
+      }
+    }
+
+    .right {
+      display: flex;
+      align-items: center;
+
+      .icon {
+        font-size: 2rem;
+        margin: 0 1.5rem;
+        cursor: pointer;
+      }
+
+      span {
+        text-transform: uppercase;
+        margin-right: 2rem;
+        cursor: pointer;
+      }
+
+      img {
+        width: 3rem;
+        height: 3rem;
+        border-radius: 0.5rem;
+        display: block;
+        object-fit: cover;
+        cursor: pointer;
+      }
+
+      .profile {
+        .options {
+          display: none;
+          background-color: var(--main-color);
+          border-radius: 0.5rem;
+
+          span {
+            text-transform: capitalize;
+            padding: 1rem;
+            cursor: pointer;
+          }
+        }
+
+        &:hover {
+          .options {
+            display: flex;
+            flex-direction: column;
+            position: absolute;
+          }
+        }
+      }
+    }
+  }
+}

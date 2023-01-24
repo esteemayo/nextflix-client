@@ -1,0 +1,95 @@
+@import '../../app.scss';
+
+.featured {
+  height: 90vh;
+  position: relative;
+
+  .category {
+    position: absolute;
+    top: 8rem;
+    left: 5rem;
+    font-size: 3rem;
+    font-weight: 500;
+    color: var(--color-white);
+    display: flex;
+    align-items: center;
+
+    select {
+      cursor: pointer;
+      background-color: var(--main-color);
+      color: var(--color-white);
+      border: 1px solid var(--color-white);
+      margin-left: 2rem;
+      padding: 0.5rem;
+    }
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+  }
+
+  .info {
+    width: 35%;
+    position: absolute;
+    left: 5rem;
+    bottom: 10rem;
+    color: var(--color-white);
+
+    display: flex;
+    flex-direction: column;
+
+    img {
+      width: 60vw;
+    }
+
+    .desc {
+      margin: 2rem 0;
+      font-size: 1.6rem;
+
+      @include mobile {
+        width: 60vw;
+      }
+    }
+
+    .buttons {
+      display: flex;
+
+      button {
+        border: none;
+        display: block;
+        padding: 1rem 2rem;
+        border-radius: 0.5rem;
+        font-size: 1.8rem;
+        font-weight: 500;
+        margin-right: 1rem;
+        cursor: pointer;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &:focus {
+          outline: none;
+        }
+
+        &.play {
+          background-color: var(--color-white);
+          color: var(--main-color);
+        }
+
+        &.more {
+          background-color: gray;
+          color: var(--color-white);
+        }
+
+        span {
+          text-transform: capitalize;
+          margin-left: 0.5rem;
+        }
+      }
+    }
+  }
+}
