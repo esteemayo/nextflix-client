@@ -1,21 +1,22 @@
 import { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { ArrowDropDown, Notifications, Search } from '@material-ui/icons/index';
 
-import { logoutUser } from 'redux/apiCalls';
-
+import { logout } from 'redux/user/userSlice';
 import './navbar.scss';
 
 const Navbar = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { user } = useSelector((state) => state.user);
 
   const { pathname } = useLocation();
   const [isScrolled, setIsScrolled] = useState(false);
 
   const handleLogout = () => {
-    logoutUser(dispatch);
+    dispatch(logout());
+    navigate('/login');
   };
 
   window.onscroll = () => {
