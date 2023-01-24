@@ -2,12 +2,10 @@ import http from './httpService';
 
 const apiEndpoint = '/movies';
 
-export function getMovies() { }
+export const getMovies = () => http.get(apiEndpoint);
 
-export function getMovie(movieId) {
-  return http.get(`${apiEndpoint}/find/${movieId}`);
-}
+export const getMovie = (movieId) =>
+  http.get(`${apiEndpoint}/find/${movieId}`);
 
-export function getRandomMovie(type) {
-  return http.get(`${apiEndpoint}/random/?type=${type}`);
-}
+export const getRandomMovie = (type) =>
+  http.get(`${apiEndpoint}/random/?type=${type}`);
