@@ -1,5 +1,7 @@
-import { useRef, useState } from 'react';
+import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import { useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   getStorage,
   ref,
@@ -8,12 +10,14 @@ import {
 } from 'firebase/storage';
 
 import app from '../../firebase';
-import { register } from 'services/userService';
+import { registerUser } from 'redux/user/userSlice';
 
 import './register.scss';
 
 const Register = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { error, loading } = useSelector((state) => state.user);
 
   const emailRef = useRef();
   const usernameRef = useRef();
@@ -57,8 +61,8 @@ const Register = () => {
         console.log(error);
       },
       () => {
-        getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
-          const newUser = {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          const credentials = {
             email,
             avatar: downloadURL,
             username: usernameRef.current.value,
@@ -66,16 +70,15 @@ const Register = () => {
             confirmPassword: confirmPasswordRef.current.value,
           };
 
-          try {
-            await register({ ...newUser });
-            navigate('/login');
-          } catch (err) {
-            console.log(err);
-          }
+          dispatch(registerUser({ credentials, navigate }));
         });
       }
     );
   };
+
+  useEffect(() => {
+    error && toast.error(error);
+  }, [error]);
 
   return (
     <div className='register'>
@@ -120,9 +123,10 @@ const Register = () => {
               />
             </div>
             <button
-              className='register-button'
-              style={{ flex: '4' }}
+              disabled={loading}
               onClick={handleFinish}
+              style={{ flex: '4' }}
+              className='register-button'
             >
               Start
             </button>
